@@ -118,6 +118,15 @@
 	public function RequestAction($Ident, $Value) 
 	{
 		switch($Ident) {
+		case "SceneSelectLeft":
+			$this->SetSceneSelectLeft($Value);
+			break;
+		case "SceneSelectRight":
+			$this->SetSceneSelectRight($Value);
+			break;
+		case "ChaseSelect":
+			$this->SetChaseSelect($Value);
+			break;
 		case "CrossfadeMode":
 			$this->SetCrossfadeMode($Value);
 			break;
@@ -139,6 +148,36 @@
 	}
 	    
 	// Beginn der Funktionen
+	public function SetSceneSelectLeft(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetSceneSelectLeft", "Ausfuehrung", 0);
+			$SceneSelectLeftChannel = 1; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $SceneSelectLeftChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("SceneSelectLeft", $Value);
+		}
+	} 
+	    
+	public function SetSceneSelectRight(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetSceneSelectRight", "Ausfuehrung", 0);
+			$SceneSelectRightChannel = 2; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $SceneSelectRightChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("SceneSelectRight", $Value);
+		}
+	} 
+	    
+	public function SetChaseSelect(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetChaseSelect", "Ausfuehrung", 0);
+			$ChaseSelectChannel = 2; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $ChaseSelectChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("ChaseSelect", $Value);
+		}
+	}     
+	    
 	public function SetCrossfadeMode(Int $Value)
 	{ 
 		If ($this->ReadPropertyBoolean("Open") == true) {
