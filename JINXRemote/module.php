@@ -104,7 +104,9 @@
 	public function RequestAction($Ident, $Value) 
 	{
 		switch($Ident) {
-		
+		case "CrossfadeMode":
+			$this->SetCrossfadeMode($Value);
+			break;
 		case "Cross":
 			$this->SetCrossFader($Value);
 			break;
@@ -123,6 +125,16 @@
 	}
 	    
 	// Beginn der Funktionen
+	public function SetCrossfadeMode(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetCrossfadeMode", "Ausfuehrung", 0);
+			$CrossfadeModeChannel = 4; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $CrossFadeModeChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("CrossfadeMode", $Value);
+		}
+	} 
+	    
 	public function SetCrossFader(Int $Value)
 	{ 
 		If ($this->ReadPropertyBoolean("Open") == true) {
