@@ -52,7 +52,21 @@
 		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 210, "Move left/right", "Gear", -1);
 		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 231, "Move up/down", "Gear", -1);
 		
+		$this->RegisterProfileInteger("Jinx.SceneChaseSelect", "Gear", "", "", 1, 255, 1);
+		for ($i = 1; $i <= 255; $i++) {
+			IPS_SetVariableProfileAssociation("Jinx.SceneChaseSelect", $i, $i, "Gear", -1);
+		}
+		
 		// Statusvariablen
+		$this->RegisterVariableInteger("SceneSelectLeft", "Scene Select Left", "Jinx.SceneChaseSelect", 10);
+		$this->EnableAction("SceneSelectLeft");
+		
+		$this->RegisterVariableInteger("SceneSelectRight", "Scene Select Right", "Jinx.SceneChaseSelect", 20);
+		$this->EnableAction("SceneSelectRight");
+		
+		$this->RegisterVariableInteger("ChaseSelect", "Chase Select", "Jinx.SceneChaseSelect", 30);
+		$this->EnableAction("ChaseSelect");
+		
 		$this->RegisterVariableInteger("CrossfadeMode", "Crossfade Mode", "Jinx.CrossfadeMode", 40);
 		$this->EnableAction("CrossfadeMode");
 		
