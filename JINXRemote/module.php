@@ -38,6 +38,12 @@
             	parent::ApplyChanges();
 		
 		// Profil anlegen
+		$this->RegisterVariableInteger("Cross", "Cross", "~Intensity.255", 50);
+		
+		$this->RegisterVariableInteger("Strobe", "Strobe", "~Intensity.255", 60);
+		
+		$this->RegisterVariableInteger("Master", "Master", "~Intensity.255", 70);
+		
 		
 		/*
 		$this->RegisterProfileInteger("IPS2DMX.FM900Reset", "Clock", "", "", 0, 6, 1);
@@ -75,42 +81,52 @@
 	public function RequestAction($Ident, $Value) 
 	{
 		switch($Ident) {
-		/*
-		case "Status":
-			$this->SetChannelStatus($Value);
+		
+		case "Cross":
+			$this->SetCrossFader($Value);
 			break;
-		case "AutoReset":
-			SetValueInteger($this->GetIDForIdent("AutoReset"), $Value);
+		case "Strobe":
+			$this->SetStrobeFader($Value);
 			break;
-		*/
+		case "Master":
+			$this->SetMasterFader($Value);
+			break;
 		default:
 		    throw new Exception("Invalid Ident");
 		}
 	}
 	    
 	// Beginn der Funktionen
-	public function SetChannelStatus(Bool $Status)
+	public function SetCrossFader(Int $Value)
 	{ 
 		If ($this->ReadPropertyBoolean("Open") == true) {
-			$this->SendDebug("SetChannelStatus", "Ausfuehrung", 0);
-			$DMXStartChannel = $this->ReadPropertyInteger("DMXStartChannel");
-			$AutoReset = 10 * GetValueInteger($this->GetIDForIdent("AutoReset"));
-			
-			If ($Status == true) {
-				
-				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $DMXStartChannel, "Value" => 255, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
-				If ($AutoReset > 0) {
-					$this->SetTimerInterval("Timer_1", ($AutoReset * 1000));
-				}	
-			}
-			else {
-				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $DMXStartChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
-				$this->SetTimerInterval("Timer_1", 0);
-			}
-			SetValueBoolean($this->GetIDForIdent("Status"), $Status);
+			$this->SendDebug("SetCrossFader", "Ausfuehrung", 0);
+			$CrossFaderChannel = 5; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $CrossFaderChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("Cross", $Value);
 		}
 	} 
 	
+	public function SetStrobeFader(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetStrobeFader", "Ausfuehrung", 0);
+			$StrobeFaderChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("Strobe", $Value);
+		}
+	}    
+	    
+	public function SetMasterFader(Int $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetMasterFader", "Ausfuehrung", 0);
+			$MasterFaderChannel = 7; //$this->ReadPropertyInteger("DMXStartChannel");
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $MasterFaderChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SetValue("Master", $Value);
+		}
+	}    
+	    
 	private function RegisterProfileInteger($Name, $Icon, $Prefix, $Suffix, $MinValue, $MaxValue, $StepSize)
 	{
 	        if (!IPS_VariableProfileExists($Name))
