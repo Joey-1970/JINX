@@ -39,11 +39,13 @@
 		
 		// Profil anlegen
 		$this->RegisterVariableInteger("Cross", "Cross", "~Intensity.255", 50);
+		$this->EnableAction("Cross");
 		
 		$this->RegisterVariableInteger("Strobe", "Strobe", "~Intensity.255", 60);
+		$this->EnableAction("Strobe");
 		
 		$this->RegisterVariableInteger("Master", "Master", "~Intensity.255", 70);
-		
+		$this->EnableAction("Master");
 		
 		/*
 		$this->RegisterProfileInteger("IPS2DMX.FM900Reset", "Clock", "", "", 0, 6, 1);
