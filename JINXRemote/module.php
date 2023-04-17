@@ -1,6 +1,6 @@
 <?
     // Klassendefinition
-    class IPS2DMX_InvolightFM900 extends IPSModule 
+    class JINXRemote extends IPSModule 
     { 
 	// Überschreibt die interne IPS_Create($id) Funktion
         public function Create() 
