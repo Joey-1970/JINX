@@ -38,19 +38,19 @@
             	parent::ApplyChanges();
 		
 		// Profil anlegen
-		$this->RegisterProfileInteger("Jinx.CrossfadeMode", "Clock", "", "", 0, 231, 1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 0, "Progressive", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 21, "Linear", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 42, "Left Shape", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 63, "Right Shape", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 84, "Left Intensity", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 105, "Right Intensity", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 126, "Left Overlay", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 147, "Right Overlay", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 168, "Left Overlay Border", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 189, "Right Overlay Border", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 210, "Move left/right", "Clock", -1);
-		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 231, "Move up/down", "Clock", -1);
+		$this->RegisterProfileInteger("Jinx.CrossfadeMode", "Gear", "", "", 0, 231, 0);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 0, "Progressive", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 21, "Linear", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 42, "Left Shape", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 63, "Right Shape", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 84, "Left Intensity", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 105, "Right Intensity", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 126, "Left Overlay", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 147, "Right Overlay", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 168, "Left Overlay Border", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 189, "Right Overlay Border", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 210, "Move left/right", "Gear", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 231, "Move up/down", "Gear", -1);
 		
 		// Statusvariablen
 		$this->RegisterVariableInteger("CrossfadeMode", "Crossfade Mode", "Jinx.CrossfadeMode", 40);
@@ -151,10 +151,10 @@
 			$this->SendDebug("SetStrobeState", "Ausfuehrung", 0);
 			$StrobeStateChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
 			$StrobeFader = $this->GetValue("Strobe");
-			If ($Value = false) {
+			If ($Value == false) {
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeStateChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
 			}
-			elseif ($Value = true) {
+			elseif ($Value == true) {
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeStateChannel, "Value" => $StrobeFader, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
 			}
 			$this->SetValue("StrobeState", $Value);
@@ -167,10 +167,10 @@
 			$this->SendDebug("SetStrobeFader", "Ausfuehrung", 0);
 			$StrobeFaderChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
 			$StrobeState = $this->GetValue("StrobeState");
-			If ($StrobeState = false) {
+			If ($StrobeState == false) {
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
 			}
-			elseif ($StrobeState = true) {
+			elseif ($StrobeState == true) {
 				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => max($Value, 1), "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
 			}
 			$this->SetValue("Strobe", $Value);
