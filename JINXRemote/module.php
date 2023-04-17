@@ -38,6 +38,24 @@
             	parent::ApplyChanges();
 		
 		// Profil anlegen
+		$this->RegisterProfileInteger("Jinx.CrossfadeMode", "Clock", "", "", 0, 6, 1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 0, "Progressive", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 21, "Linear", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 42, "Left Shape", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 63, "Right Shape", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 84, "Left Intensity", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 105, "Right Intensity", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 126, "Left Overlay", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 147, "Right Overlay", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 168, "Left Overlay Border", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 189, "Right Overlay Border", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 210, "Move left/right", "Clock", -1);
+		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 231, "Move up/down", "Clock", -1);
+		
+		// Statusvariablen
+		$this->RegisterVariableInteger("CrossfadeMode", "Crossfade Mode", "Jinx.CrossfadeMode", 40);
+		$this->EnableAction("CrossfadeMode");
+		
 		$this->RegisterVariableInteger("Cross", "Cross", "~Intensity.255", 50);
 		$this->EnableAction("Cross");
 		
