@@ -130,7 +130,7 @@
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SendDebug("SetCrossfadeMode", "Ausfuehrung", 0);
 			$CrossfadeModeChannel = 4; //$this->ReadPropertyInteger("DMXStartChannel");
-			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $CrossFadeModeChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $CrossfadeModeChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
 			$this->SetValue("CrossfadeMode", $Value);
 		}
 	} 
@@ -152,10 +152,10 @@
 			$StrobeStateChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
 			$StrobeFader = $this->GetValue("Strobe");
 			If ($Value = false) {
-				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeStateChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
 			}
 			elseif ($Value = true) {
-				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => $StrobeFader, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeStateChannel, "Value" => $StrobeFader, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
 			}
 			$this->SetValue("StrobeState", $Value);
 		}
