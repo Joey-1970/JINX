@@ -38,7 +38,7 @@
             	parent::ApplyChanges();
 		
 		// Profil anlegen
-		$this->RegisterProfileInteger("Jinx.CrossfadeMode", "Clock", "", "", 0, 6, 1);
+		$this->RegisterProfileInteger("Jinx.CrossfadeMode", "Clock", "", "", 0, 231, 1);
 		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 0, "Progressive", "Clock", -1);
 		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 21, "Linear", "Clock", -1);
 		IPS_SetVariableProfileAssociation("Jinx.CrossfadeMode", 42, "Left Shape", "Clock", -1);
