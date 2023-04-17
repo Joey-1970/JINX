@@ -41,10 +41,13 @@
 		$this->RegisterVariableInteger("Cross", "Cross", "~Intensity.255", 50);
 		$this->EnableAction("Cross");
 		
-		$this->RegisterVariableInteger("Strobe", "Strobe", "~Intensity.255", 60);
+		$this->RegisterVariableBoolean("StrobeState", "Strobe Status", "~Switch", 60);
+		$this->EnableAction("StrobeState");
+		
+		$this->RegisterVariableInteger("Strobe", "Strobe", "~Intensity.255", 70);
 		$this->EnableAction("Strobe");
 		
-		$this->RegisterVariableInteger("Master", "Master", "~Intensity.255", 70);
+		$this->RegisterVariableInteger("Master", "Master", "~Intensity.255", 80);
 		$this->EnableAction("Master");
 		
 		/*
@@ -87,6 +90,9 @@
 		case "Cross":
 			$this->SetCrossFader($Value);
 			break;
+		case "StrobeState":
+			$this->SetStrobeState($Value);
+			break;
 		case "Strobe":
 			$this->SetStrobeFader($Value);
 			break;
@@ -109,12 +115,34 @@
 		}
 	} 
 	
+	public function SetStrobeState(Bool $Value)
+	{ 
+		If ($this->ReadPropertyBoolean("Open") == true) {
+			$this->SendDebug("SetStrobeState", "Ausfuehrung", 0);
+			$StrobeStateChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
+			$StrobeFader = $this->GetValue("Strobe");
+			If ($Value = false) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
+			}
+			elseif ($Value = true) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => $StrobeFader, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
+			}
+			$this->SetValue("StrobeState", $Value);
+		}
+	}        
+	    
 	public function SetStrobeFader(Int $Value)
 	{ 
 		If ($this->ReadPropertyBoolean("Open") == true) {
 			$this->SendDebug("SetStrobeFader", "Ausfuehrung", 0);
 			$StrobeFaderChannel = 6; //$this->ReadPropertyInteger("DMXStartChannel");
-			$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => $Value, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			$StrobeState = $this->GetValue("StrobeState");
+			If ($StrobeState = false) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => 0, "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));	
+			}
+			elseif ($StrobeState = true) {
+				$this->SendDataToParent(json_encode(Array("DataID"=> "{F241DA6A-A8BD-484B-A4EA-CC2FA8D83031}", "Size" => 1,  "Channel" => $StrobeFaderChannel, "Value" => max($Value, 1), "FadingSeconds" => 0.0, "DelayedSeconds" => 0.0 )));
+			}
 			$this->SetValue("Strobe", $Value);
 		}
 	}    
