@@ -10,8 +10,6 @@
  	    	$this->RegisterPropertyBoolean("Open", false);
 		$this->ConnectParent("{B1E43BF6-770A-4FD7-B4FE-6D265F93746B}");
  	    	$this->RegisterPropertyInteger("DMXStartChannel", 1);
-		$this->RegisterPropertyInteger("Timer_1", 60);
-		$this->RegisterTimer("Timer_1", 0, 'I2DFM900_SetChannelStatus($_IPS["TARGET"], false);');
         }
  	
 	public function GetConfigurationForm() 
@@ -24,7 +22,7 @@
 		$arrayElements = array(); 
 		$arrayElements[] = array("name" => "Open", "type" => "CheckBox",  "caption" => "Aktiv"); 
  		$arrayElements[] = array("type" => "NumberSpinner", "name" => "DMXStartChannel",  "caption" => "DMX-Start-Kanal");
-		$arrayElements[] = array("type" => "Label", "label" => "Dieses Gerät benötigt 1 DMX-Kanal");
+		$arrayElements[] = array("type" => "Label", "label" => "Dieses Gerät benötigt 7 DMX-Kanäle");
 		
 		$arrayActions = array();
 		$arrayActions[] = array("type" => "Label", "label" => "Test Center"); 
@@ -40,6 +38,8 @@
             	parent::ApplyChanges();
 		
 		// Profil anlegen
+		
+		/*
 		$this->RegisterProfileInteger("IPS2DMX.FM900Reset", "Clock", "", "", 0, 6, 1);
 		IPS_SetVariableProfileAssociation("IPS2DMX.FM900Reset", 0, "Aus", "Clock", -1);
 		IPS_SetVariableProfileAssociation("IPS2DMX.FM900Reset", 1, "10 sek", "Clock", -1);
@@ -56,7 +56,7 @@
 		$this->RegisterVariableInteger("AutoReset", "Auto Reset", "IPS2DMX.FM900Reset", 20);
 		$this->EnableAction("AutoReset");
 		IPS_SetHidden($this->GetIDForIdent("AutoReset"), false);
-		
+		*/
 		
 		If ($this->HasActiveParent() == true) {	
 			If ($this->ReadPropertyBoolean("Open") == true) {
@@ -75,12 +75,14 @@
 	public function RequestAction($Ident, $Value) 
 	{
 		switch($Ident) {
+		/*
 		case "Status":
 			$this->SetChannelStatus($Value);
 			break;
 		case "AutoReset":
 			SetValueInteger($this->GetIDForIdent("AutoReset"), $Value);
 			break;
+		*/
 		default:
 		    throw new Exception("Invalid Ident");
 		}
